@@ -26,7 +26,7 @@ public class RestaurantController(IRestaurantService restaurantService) : Contro
             return NotFound();
         }
 
-        return Ok();
+        return Ok(restaurant);
     }
 
     [HttpPost]
@@ -49,6 +49,21 @@ public class RestaurantController(IRestaurantService restaurantService) : Contro
 
         return isDeleted
             ? NoContent()
+            : NotFound();
+    }
+
+    [HttpPut("{id:int}")]
+    public ActionResult UpdateRestaurant([FromRoute] int id, [FromBody] UpdateRestaurantDto dto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+
+        var isUpdated = restaurantService.Update(id, dto);
+
+        return isUpdated
+            ? Ok(id)
             : NotFound();
     }
 }

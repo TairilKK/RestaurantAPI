@@ -4,7 +4,7 @@ GET {{RestaurantAPI_HostAddress}}/api/restaurant/
 Accept: application/json
 
 ###
-GET {{RestaurantAPI_HostAddress}}/api/restaurant/5
+GET {{RestaurantAPI_HostAddress}}/api/restaurant/9
 
 
 ###
@@ -43,3 +43,15 @@ Content-Type: application/json
 
 ###
 DELETE {{RestaurantAPI_HostAddress}}/api/restaurant/8
+
+
+
+###
+PUT {{RestaurantAPI_HostAddress}}/api/restaurant/9
+Content-Type: application/json
+
+{
+  "name": "Pizza Amore",
+  "description": "TEST",
+  "hasDelivery": false
+}
