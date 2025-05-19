@@ -1,12 +1,25 @@
+using Microsoft.EntityFrameworkCore;
+using RestaurantAPI;
+using RestaurantAPI.Entities;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+builder.Services.AddDbContext<RestaurantDbContext>(options =>
+{
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("RestaurantConnectionString")
+    );
+});
 builder.Services.AddControllers();
+builder.Services.AddScoped<RestaurantSeeder>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<RestaurantSeeder>();
+    seeder.Seed();
+}
 
 app.UseHttpsRedirection();
 
