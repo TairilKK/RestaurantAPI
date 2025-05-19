@@ -4,7 +4,9 @@ GET {{RestaurantAPI_HostAddress}}/api/restaurant/
 Accept: application/json
 
 ###
-GET {{RestaurantAPI_HostAddress}}/api/restaurant/9
+@restaurantId = 9
+
+GET {{RestaurantAPI_HostAddress}}/api/restaurant/{{restaurantId}}
 
 
 ###
@@ -25,11 +27,13 @@ Content-Type: application/json
 
 
 ###
-DELETE {{RestaurantAPI_HostAddress}}/api/restaurant/11
+@deleteRestaurantId = 11
+
+DELETE {{RestaurantAPI_HostAddress}}/api/restaurant/{{deleteRestaurantId}}
 
 
 ###
-PUT {{RestaurantAPI_HostAddress}}/api/restaurant/9
+PUT {{RestaurantAPI_HostAddress}}/api/restaurant/{{restaurantId}}
 Content-Type: application/json
 
 {
@@ -39,7 +43,7 @@ Content-Type: application/json
 }
 
 ###
-POST {{RestaurantAPI_HostAddress}}/api/restaurant/9/dish
+POST {{RestaurantAPI_HostAddress}}/api/restaurant/{{restaurantId}}/dish
 Content-Type: application/json
 
 {
@@ -49,16 +53,20 @@ Content-Type: application/json
 }
 
 ###
-GET {{RestaurantAPI_HostAddress}}/api/restaurant/9/dish/7
+@dishId = 7
+
+GET {{RestaurantAPI_HostAddress}}/api/restaurant/{{restaurantId}}/dish/{{dishId}}
 
 
 ###
-GET {{RestaurantAPI_HostAddress}}/api/restaurant/9/dish
+GET {{RestaurantAPI_HostAddress}}/api/restaurant/{{restaurantId}}/dish
 
 
 ###
-DELETE {{RestaurantAPI_HostAddress}}/api/restaurant/9/dish/9
+@deleteDishId = 9
+
+DELETE {{RestaurantAPI_HostAddress}}/api/restaurant/{{restaurantId}}/dish/{{deleteDishId}}
 
 
 ###
-DELETE {{RestaurantAPI_HostAddress}}/api/restaurant/9/dish
+DELETE {{RestaurantAPI_HostAddress}}/api/restaurant/{{restaurantId}}/dish
