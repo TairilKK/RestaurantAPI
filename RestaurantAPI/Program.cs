@@ -13,9 +13,11 @@ builder.Services.AddDbContext<RestaurantDbContext>(options =>
     );
 });
 builder.Services.AddControllers();
+
 builder.Services.AddScoped<RestaurantSeeder>();
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
+builder.Services.AddScoped<RequestTimeMiddleware>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -30,6 +32,7 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseMiddleware<RequestTimeMiddleware>();
 
 app.UseHttpsRedirection();
 
