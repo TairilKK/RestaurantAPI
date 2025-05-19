@@ -1,10 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using NLog.Web;
 using RestaurantAPI;
 using RestaurantAPI.Entities;
 using RestaurantAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
 builder.Services.AddDbContext<RestaurantDbContext>(options =>
 {
     options.UseSqlServer(
@@ -14,6 +14,7 @@ builder.Services.AddDbContext<RestaurantDbContext>(options =>
 builder.Services.AddControllers();
 builder.Services.AddScoped<RestaurantSeeder>();
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
+builder.Host.UseNLog();
 
 var app = builder.Build();
 

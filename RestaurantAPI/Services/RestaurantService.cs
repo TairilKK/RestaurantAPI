@@ -14,7 +14,7 @@ public interface IRestaurantService
     bool Update(int id, UpdateRestaurantDto dto);
 }
 
-public class RestaurantService(RestaurantDbContext dbContext) : IRestaurantService
+public class RestaurantService(RestaurantDbContext dbContext, ILogger<RestaurantService> logger) : IRestaurantService
 {
     public RestaurantDto? GetById(int id)
     {
@@ -51,6 +51,7 @@ public class RestaurantService(RestaurantDbContext dbContext) : IRestaurantServi
 
     public bool Delete(int id)
     {
+        logger.LogWarning($"Restaurant with id: {id} DELETE action invoked");
         var restaurant = dbContext.Restaurants
             .FirstOrDefault(r => r.Id == id);
         if (restaurant is null) return false;

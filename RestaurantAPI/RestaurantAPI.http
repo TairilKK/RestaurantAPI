@@ -42,7 +42,7 @@ Content-Type: application/json
 
 
 ###
-DELETE {{RestaurantAPI_HostAddress}}/api/restaurant/8
+DELETE {{RestaurantAPI_HostAddress}}/api/restaurant/11
 
 
 
