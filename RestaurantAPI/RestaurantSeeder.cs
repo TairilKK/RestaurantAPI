@@ -25,6 +25,7 @@ public class RestaurantSeeder(RestaurantDbContext _dbContext)
                 Description =
                     "KFC is a global fast-food chain known for its fried chicken, founded by Harland Sanders in 1952, and is headquartered in Louisville, Kentucky.",
                 HasDelivery = true,
+                ContactEmail = "kfc@email.com",
                 Dishes = new List<Dish>()
                 {
                     new Dish()
@@ -52,6 +53,7 @@ public class RestaurantSeeder(RestaurantDbContext _dbContext)
                 Description =
                     "Sushi World offers a wide variety of traditional and modern sushi dishes, using only the freshest ingredients imported from Japan.",
                 HasDelivery = true,
+                ContactEmail = "shushi_world@email.com",
                 Dishes = new List<Dish>()
                 {
                     new Dish()
@@ -80,6 +82,7 @@ public class RestaurantSeeder(RestaurantDbContext _dbContext)
                 Description =
                     "Pizzeria Bella Italia serves authentic Italian pizzas baked in a traditional wood-fired oven, alongside classic pastas and wines.",
                 HasDelivery = false,
+                ContactEmail = "bella_italia@email.com",
                 Dishes = new List<Dish>()
                 {
                     new Dish()
