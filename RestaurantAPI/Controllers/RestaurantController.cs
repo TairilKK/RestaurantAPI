@@ -41,4 +41,14 @@ public class RestaurantController(IRestaurantService restaurantService) : Contro
 
         return Created($"/api/restaurants/{id}", null);
     }
+
+    [HttpDelete("{id:int}")]
+    public ActionResult DeleteRestaurant([FromRoute] int id)
+    {
+        var isDeleted = restaurantService.Delete(id);
+
+        return isDeleted
+            ? NoContent()
+            : NotFound();
+    }
 }

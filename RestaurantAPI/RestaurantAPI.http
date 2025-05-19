@@ -39,3 +39,7 @@ Content-Type: application/json
   "street": "Włoska 12 jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj",
   "postalCode": "31-100"
 }
+
+
+###
+DELETE {{RestaurantAPI_HostAddress}}/api/restaurant/8

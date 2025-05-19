@@ -10,6 +10,7 @@ public interface IRestaurantService
     RestaurantDto? GetById(int id);
     IEnumerable<RestaurantDto> GetAll();
     int Create(CreateRestaurantDto dto);
+    bool Delete(int id);
 }
 
 public class RestaurantService(RestaurantDbContext dbContext) : IRestaurantService
@@ -44,5 +45,16 @@ public class RestaurantService(RestaurantDbContext dbContext) : IRestaurantServi
         dbContext.Restaurants.Add(newRestaurant);
         dbContext.SaveChanges();
         return newRestaurant.Id;
+    }
+
+    public bool Delete(int id)
+    {
+        var restaurant = dbContext.Restaurants
+            .FirstOrDefault(r => r.Id == id);
+        if (restaurant is null) return false;
+
+        dbContext.Restaurants.Remove(restaurant);
+        dbContext.SaveChanges();
+        return true;
     }
 }
