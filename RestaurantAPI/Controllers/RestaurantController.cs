@@ -39,4 +39,14 @@ public class RestaurantController(RestaurantDbContext dbContext) : ControllerBas
 
         return Ok(restaurant.ToRestaurantDto());
     }
+
+    [HttpPost]
+    public ActionResult CreateRestaurant([FromBody] CreateRestaurantDto dto)
+    {
+        var newRestaurant = dto.ToRestaurant();
+        dbContext.Restaurants.Add(newRestaurant);
+        dbContext.SaveChanges();
+
+        return Created($"/api/restaurants/{newRestaurant.Id}", null);
+    }
 }

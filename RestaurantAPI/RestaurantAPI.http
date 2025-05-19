@@ -5,3 +5,20 @@ Accept: application/json
 
 ###
 GET {{RestaurantAPI_HostAddress}}/api/restaurant/5
+
+
+###
+POST {{RestaurantAPI_HostAddress}}/api/restaurant
+Content-Type: application/json
+
+{
+  "name": "Pizza Amore",
+  "description": "Rodzinna pizzeria oferująca włoską pizzę na cienkim cieście, działająca od 2005 roku.",
+  "category": "Pizzeria",
+  "hasDelivery": true,
+  "contactEmail": "kontakt@pizzaamore.pl",
+  "contactNumber": "+48 123 456 789",
+  "city": "Kraków",
+  "street": "Włoska 12",
+  "postalCode": "31-100"
+}

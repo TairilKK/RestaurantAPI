@@ -19,4 +19,23 @@ public static class RestaurantMapping
             Dishes: restaurant.Dishes.Select(d => d.ToDishDto()).ToList()
         );
     }
+
+    public static Restaurant ToRestaurant(this CreateRestaurantDto createRestaurantDto)
+    {
+        return new Restaurant()
+        {
+            Name = createRestaurantDto.Name,
+            Description = createRestaurantDto.Description,
+            Category = createRestaurantDto.Category,
+            HasDelivery = createRestaurantDto.HasDelivery,
+            ContactEmail = createRestaurantDto.ContactEmail,
+            ContactNumber = createRestaurantDto.ContactNumber,
+            Adress = new Adress()
+            {
+                City = createRestaurantDto.City,
+                Street = createRestaurantDto.Street,
+                PostalCode = createRestaurantDto.PostalCode
+            }
+        };
+    }
 }
