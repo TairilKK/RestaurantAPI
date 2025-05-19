@@ -28,7 +28,6 @@ Content-Type: application/json
 DELETE {{RestaurantAPI_HostAddress}}/api/restaurant/11
 
 
-
 ###
 PUT {{RestaurantAPI_HostAddress}}/api/restaurant/9
 Content-Type: application/json
@@ -38,3 +37,28 @@ Content-Type: application/json
   "description": "TEST",
   "hasDelivery": false
 }
+
+###
+POST {{RestaurantAPI_HostAddress}}/api/restaurant/9/dish
+Content-Type: application/json
+
+{
+  "name": "Margherita",
+  "description": "Klasyczna pizza z mozzarellą i sosem pomidorowym",
+  "price": 25.00
+}
+
+###
+GET {{RestaurantAPI_HostAddress}}/api/restaurant/9/dish/7
+
+
+###
+GET {{RestaurantAPI_HostAddress}}/api/restaurant/9/dish
+
+
+###
+DELETE {{RestaurantAPI_HostAddress}}/api/restaurant/9/dish/9
+
+
+###
+DELETE {{RestaurantAPI_HostAddress}}/api/restaurant/9/dish

@@ -15,7 +15,10 @@ builder.Services.AddDbContext<RestaurantDbContext>(options =>
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<RestaurantSeeder>();
+
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
+builder.Services.AddScoped<IDishService, DishService>();
+
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddScoped<RequestTimeMiddleware>();
 

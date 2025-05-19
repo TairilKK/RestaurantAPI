@@ -14,4 +14,14 @@ public static class DishMapping
             dish.Price
         );
     }
+
+    public static Dish ToDish(this CreateDishDto dto)
+    {
+        return new Dish()
+        {
+            Name = dto.Name,
+            Description = dto.Description,
+            Price = dto.Price
+        };
+    }
 }
