@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantAPI.Dto;
 using RestaurantAPI.Entities;
+using RestaurantAPI.Exceptions;
 using RestaurantAPI.Mapping;
 
 namespace RestaurantAPI.Services;
@@ -10,8 +11,8 @@ public interface IRestaurantService
     RestaurantDto? GetById(int id);
     IEnumerable<RestaurantDto> GetAll();
     int Create(CreateRestaurantDto dto);
-    bool Delete(int id);
-    bool Update(int id, UpdateRestaurantDto dto);
+    void Delete(int id);
+    void Update(int id, UpdateRestaurantDto dto);
 }
 
 public class RestaurantService(RestaurantDbContext dbContext, ILogger<RestaurantService> logger) : IRestaurantService
@@ -23,7 +24,10 @@ public class RestaurantService(RestaurantDbContext dbContext, ILogger<Restaurant
             .Include(r => r.Dishes)
             .FirstOrDefault(r => r.Id == id);
 
-        return restaurant?.ToRestaurantDto();
+        if (restaurant is null)
+            throw new NotFoundException("Restaurant not found");
+
+        return restaurant.ToRestaurantDto();
     }
 
     public IEnumerable<RestaurantDto> GetAll()
@@ -49,23 +53,26 @@ public class RestaurantService(RestaurantDbContext dbContext, ILogger<Restaurant
 
     }
 
-    public bool Delete(int id)
+    public void Delete(int id)
     {
         logger.LogWarning($"Restaurant with id: {id} DELETE action invoked");
+
         var restaurant = dbContext.Restaurants
             .FirstOrDefault(r => r.Id == id);
-        if (restaurant is null) return false;
+
+        if (restaurant is null)
+            throw new NotFoundException("Restaurant not found");
 
         dbContext.Restaurants.Remove(restaurant);
         dbContext.SaveChanges();
-        return true;
     }
 
-    public bool Update(int id, UpdateRestaurantDto dto)
+    public void Update(int id, UpdateRestaurantDto dto)
     {
         var restaurant = dbContext.Restaurants
             .FirstOrDefault(r => r.Id == id);
-        if (restaurant is null) return false;
+        if (restaurant is null)
+            throw new NotFoundException("Restaurant not found");
 
 
         restaurant.Name = dto.Name;
@@ -73,7 +80,5 @@ public class RestaurantService(RestaurantDbContext dbContext, ILogger<Restaurant
         restaurant.HasDelivery = dto.HasDelivery;
 
         dbContext.SaveChanges();
-        return true;
-
     }
 }
