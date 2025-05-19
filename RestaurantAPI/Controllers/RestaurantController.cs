@@ -3,50 +3,42 @@ using Microsoft.EntityFrameworkCore;
 using RestaurantAPI.Dto;
 using RestaurantAPI.Entities;
 using RestaurantAPI.Mapping;
+using RestaurantAPI.Services;
 
 namespace RestaurantAPI.Controllers;
 
 [Route("api/restaurant")]
-public class RestaurantController(RestaurantDbContext dbContext) : ControllerBase
+public class RestaurantController(IRestaurantService restaurantService) : ControllerBase
 {
     [HttpGet]
     public ActionResult<IEnumerable<RestaurantDto>> GetAll()
     {
-        var restaurants = dbContext.Restaurants
-            .Include(r => r.Dishes)
-            .Include(r => r.Adress)
-            .ToList();
-
-        var restaurantsDtos = restaurants
-            .Select(r => r.ToRestaurantDto())
-            .ToList();
-
-        return Ok(restaurantsDtos);
+        return Ok(restaurantService.GetAll());
     }
 
     [HttpGet("{id:int}")]
     public ActionResult<IEnumerable<RestaurantDto>> Get([FromRoute] int id)
     {
-        var restaurant = dbContext.Restaurants
-            .Include(r => r.Adress)
-            .Include(r => r.Dishes)
-            .FirstOrDefault(r => r.Id == id);
+        var restaurant = restaurantService.GetById(id);
 
         if (restaurant is null)
         {
             return NotFound();
         }
 
-        return Ok(restaurant.ToRestaurantDto());
+        return Ok();
     }
 
     [HttpPost]
     public ActionResult CreateRestaurant([FromBody] CreateRestaurantDto dto)
     {
-        var newRestaurant = dto.ToRestaurant();
-        dbContext.Restaurants.Add(newRestaurant);
-        dbContext.SaveChanges();
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
 
-        return Created($"/api/restaurants/{newRestaurant.Id}", null);
+        var id = restaurantService.Create(dto);
+
+        return Created($"/api/restaurants/{id}", null);
     }
 }
