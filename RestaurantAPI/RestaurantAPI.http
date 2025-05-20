@@ -70,3 +70,24 @@ DELETE {{RestaurantAPI_HostAddress}}/api/restaurant/{{restaurantId}}/dish/{{dele
 
 ###
 DELETE {{RestaurantAPI_HostAddress}}/api/restaurant/{{restaurantId}}/dish
+
+
+###
+POST {{RestaurantAPI_HostAddress}}/api/account/register
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "123456",
+  "confirmPassword": "123456"
+}
+
+
+###
+POST {{RestaurantAPI_HostAddress}}/api/account/login
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "123456"
+}

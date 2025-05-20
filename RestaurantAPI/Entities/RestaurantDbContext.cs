@@ -7,6 +7,8 @@ public class RestaurantDbContext(DbContextOptions<RestaurantDbContext> options) 
     public DbSet<Adress> Adresses { get; set; }
     public DbSet<Restaurant> Restaurants { get; set; }
     public DbSet<Dish> Dishes { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<Role> Roles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -35,5 +37,18 @@ public class RestaurantDbContext(DbContextOptions<RestaurantDbContext> options) 
             eb.Property(e => e.Name)
                 .IsRequired();
         });
+
+        modelBuilder.Entity<User>(eb =>
+        {
+            eb.HasOne(u => u.Role)
+                .WithMany()
+                .HasForeignKey(u => u.RoleId);
+
+            eb.Property(u => u.Email).IsRequired();
+            eb.Property(u => u.PasswordHash).IsRequired();
+        });
+
+        modelBuilder.Entity<Role>()
+            .Property(r => r.Name).IsRequired();
     }
 }
