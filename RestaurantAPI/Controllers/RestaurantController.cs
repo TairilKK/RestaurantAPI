@@ -10,17 +10,19 @@ namespace RestaurantAPI.Controllers;
 
 [Route("api/restaurant")]
 [ApiController]
+[Authorize]
 public class RestaurantController(IRestaurantService restaurantService) : ControllerBase
 {
     [HttpGet]
-    [Authorize]
+    [Authorize(Policy = "HasNationality")]
     public ActionResult<IEnumerable<RestaurantDto>> GetAll()
     {
         return Ok(restaurantService.GetAll());
     }
 
     [HttpGet("{id:int}")]
-    public ActionResult<IEnumerable<RestaurantDto>> Get([FromRoute] int id)
+    [AllowAnonymous]
+    public ActionResult<IEnumerable<RestaurantDto>> GetById([FromRoute] int id)
     {
         var restaurant = restaurantService.GetById(id);
 
@@ -28,6 +30,7 @@ public class RestaurantController(IRestaurantService restaurantService) : Contro
     }
 
     [HttpPost]
+    [Authorize(Roles = "Admin,Manager")]
     public ActionResult CreateRestaurant([FromBody] CreateRestaurantDto dto)
     {
         var id = restaurantService.Create(dto);

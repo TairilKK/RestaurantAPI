@@ -53,6 +53,13 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("HasNationality", builder =>
+    {
+        builder.RequireClaim("Nationality", "German", "Polish");
+    });
+});
 
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddScoped<RequestTimeMiddleware>();

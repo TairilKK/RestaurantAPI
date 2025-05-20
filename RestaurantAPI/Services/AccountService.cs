@@ -51,6 +51,11 @@ public class AccountService(RestaurantDbContext dbContext, IPasswordHasher<User>
             new Claim(ClaimTypes.Role, user.Role.Name)
         };
 
+        if (user.Nationality is not null)
+        {
+            claims.Add(new Claim("Nationality", user.Nationality));
+        }
+
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey));
         var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
         var expires = DateTime.Now.AddDays(authenticationSettings.JwtExpireDays);
