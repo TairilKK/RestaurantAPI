@@ -1,12 +1,14 @@
 using System.Text;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NLog.Web;
 using RestaurantAPI;
+using RestaurantAPI.Authorizations;
 using RestaurantAPI.Dto;
 using RestaurantAPI.Entities;
 using RestaurantAPI.Entities.Validators;
@@ -50,14 +52,18 @@ builder.Services.AddScoped<RestaurantSeeder>();
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 builder.Services.AddScoped<IDishService, DishService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
-
+builder.Services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("HasNationality", builder =>
+    options.AddPolicy("HasNationality", policyBuilder =>
     {
-        builder.RequireClaim("Nationality", "German", "Polish");
+        policyBuilder.RequireClaim("Nationality", "German", "Polish");
+    });
+    options.AddPolicy("AtLeast20", policyBuilder =>
+    {
+        policyBuilder.AddRequirements(new MinimumAgeRequirement(20));
     });
 });
 

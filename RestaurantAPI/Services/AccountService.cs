@@ -48,12 +48,17 @@ public class AccountService(RestaurantDbContext dbContext, IPasswordHasher<User>
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.Role.Name)
+            new Claim(ClaimTypes.Role, user.Role.Name),
         };
 
         if (user.Nationality is not null)
         {
             claims.Add(new Claim("Nationality", user.Nationality));
+        }
+
+        if (user.DateOfBirth is not null)
+        {
+            claims.Add(new Claim("DateOfBirth", user.DateOfBirth.ToString()!));
         }
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey));

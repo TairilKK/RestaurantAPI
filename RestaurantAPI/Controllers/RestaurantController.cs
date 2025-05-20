@@ -14,7 +14,7 @@ namespace RestaurantAPI.Controllers;
 public class RestaurantController(IRestaurantService restaurantService) : ControllerBase
 {
     [HttpGet]
-    [Authorize(Policy = "HasNationality")]
+    [Authorize(Policy = "AtLeast20")]
     public ActionResult<IEnumerable<RestaurantDto>> GetAll()
     {
         return Ok(restaurantService.GetAll());
