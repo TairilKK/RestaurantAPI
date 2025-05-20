@@ -56,6 +56,7 @@ builder.Services.AddScoped<IUserContextService, UserContextService>();
 
 builder.Services.AddScoped<IAuthorizationHandler, MinimumAgeRequirementHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, ResourceOperationRequirementHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, CreatedMultipleRestaurantsRequirementHandler>();
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
@@ -68,6 +69,10 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("AtLeast20", policyBuilder =>
     {
         policyBuilder.AddRequirements(new MinimumAgeRequirement(20));
+    });
+    options.AddPolicy("CreatedAtLeast2Restaurants", policyBuilder =>
+    {
+        policyBuilder.AddRequirements(new CreatedMultipleRestaurantsRequirement(2));
     });
 });
 

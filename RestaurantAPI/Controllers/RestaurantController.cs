@@ -11,7 +11,7 @@ namespace RestaurantAPI.Controllers;
 public class RestaurantController(IRestaurantService restaurantService) : ControllerBase
 {
     [HttpGet]
-    [Authorize(Policy = "AtLeast20")]
+    [Authorize(Policy = "CreatedAtLeast2Restaurants")]
     public ActionResult<IEnumerable<RestaurantDto>> GetAll()
     {
         return Ok(restaurantService.GetAll());
