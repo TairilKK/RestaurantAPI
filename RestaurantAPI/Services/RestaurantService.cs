@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Linq.Expressions;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using RestaurantAPI.Authorizations;
@@ -6,13 +7,14 @@ using RestaurantAPI.Dto;
 using RestaurantAPI.Entities;
 using RestaurantAPI.Exceptions;
 using RestaurantAPI.Mapping;
+using RestaurantAPI.Models;
 
 namespace RestaurantAPI.Services;
 
 public interface IRestaurantService
 {
     RestaurantDto? GetById(int id);
-    IEnumerable<RestaurantDto> GetAll();
+    PagedResult<RestaurantDto> GetAll(RestaurantQuery searchPhrase);
     int Create(CreateRestaurantDto dto);
     void Delete(int id);
     void Update(int id, UpdateRestaurantDto dto);
@@ -33,18 +35,42 @@ public class RestaurantService(RestaurantDbContext dbContext, ILogger<Restaurant
         return restaurant.ToRestaurantDto();
     }
 
-    public IEnumerable<RestaurantDto> GetAll()
+    public PagedResult<RestaurantDto> GetAll(RestaurantQuery query)
     {
-        var restaurants = dbContext.Restaurants
+        var baseQuery = dbContext.Restaurants
             .Include(r => r.Dishes)
             .Include(r => r.Adress)
+            .Where(r => query.SearchPhrase == null
+                        || r.Name.ToLower().Contains(query.SearchPhrase.ToLower())
+                        || r.Description.ToLower().Contains(query.SearchPhrase.ToLower()));
+
+        if (query.SortBy is not null)
+        {
+            var columnsSelector = new Dictionary<string, Expression<Func<Restaurant, object>>>()
+            {
+                { nameof(Restaurant.Name), r => r.Name },
+                { nameof(Restaurant.Category), r => r.Category },
+                { nameof(Restaurant.Description), r => r.Description }
+            };
+
+            var selectedColumn = columnsSelector[query.SortBy];
+            baseQuery = query.SortDirection == SortDirection.ASC
+                ? baseQuery.OrderBy(selectedColumn)
+                : baseQuery.OrderByDescending(selectedColumn);
+        }
+
+
+        var restaurants = baseQuery
+            .Skip(query.PageSize * (query.PageNumber - 1))
+            .Take(query.PageSize)
             .ToList();
 
+        var count = baseQuery.Count();
         var restaurantsDtos = restaurants
             .Select(r => r.ToRestaurantDto())
             .ToList();
-
-        return restaurantsDtos;
+        var result = new PagedResult<RestaurantDto>(restaurantsDtos, count, query.PageSize, query.PageNumber);
+        return result;
     }
 
     public int Create(CreateRestaurantDto dto)
@@ -84,6 +110,7 @@ public class RestaurantService(RestaurantDbContext dbContext, ILogger<Restaurant
     {
         var restaurant = dbContext.Restaurants
             .FirstOrDefault(r => r.Id == id);
+
         if (restaurant is null)
             throw new NotFoundException("Restaurant not found");
 

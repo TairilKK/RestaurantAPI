@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantAPI.Dto;
+using RestaurantAPI.Models;
 using RestaurantAPI.Services;
 
 namespace RestaurantAPI.Controllers;
@@ -12,9 +13,9 @@ public class RestaurantController(IRestaurantService restaurantService) : Contro
 {
     [HttpGet]
     [Authorize(Policy = "CreatedAtLeast2Restaurants")]
-    public ActionResult<IEnumerable<RestaurantDto>> GetAll()
+    public ActionResult<IEnumerable<RestaurantDto>> GetAll([FromQuery] RestaurantQuery query)
     {
-        return Ok(restaurantService.GetAll());
+        return Ok(restaurantService.GetAll(query));
     }
 
     [HttpGet("{id:int}")]

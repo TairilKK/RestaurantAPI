@@ -13,6 +13,8 @@ using RestaurantAPI.Dto;
 using RestaurantAPI.Entities;
 using RestaurantAPI.Entities.Validators;
 using RestaurantAPI.Middleware;
+using RestaurantAPI.Models;
+using RestaurantAPI.Models.Validators;
 using RestaurantAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -60,6 +62,8 @@ builder.Services.AddScoped<IAuthorizationHandler, CreatedMultipleRestaurantsRequ
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+builder.Services.AddScoped<IValidator<RestaurantQuery>, RestaurantQueryValidator>();
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("HasNationality", policyBuilder =>
