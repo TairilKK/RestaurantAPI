@@ -1,8 +1,5 @@
 @RestaurantAPI_HostAddress = http://localhost:5127
 
-GET {{RestaurantAPI_HostAddress}}/api/restaurant/
-Accept: application/json
-
 ###
 @restaurantId = 9
 
@@ -82,7 +79,6 @@ Content-Type: application/json
   "confirmPassword": "123456"
 }
 
-
 ###
 POST {{RestaurantAPI_HostAddress}}/api/account/login
 Content-Type: application/json
@@ -91,3 +87,11 @@ Content-Type: application/json
   "email": "test@test.com",
   "password": "123456"
 }
+
+
+###
+@token = Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjQiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0ZXN0QHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTc0OTAzNzU2MywiaXNzIjoiaHR0cDovL3Jlc3RhdXJhbnRhcGkuY29tIiwiYXVkIjoiaHR0cDovL3Jlc3RhdXJhbnRhcGkuY29tIn0.OejUT95yJAN_kR_5OaLgtjEWab0T88-Ongt9ReZQit8
+
+GET {{RestaurantAPI_HostAddress}}/api/restaurant/
+Accept: application/json
+Authorization: {{token}}
