@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantAPI.Dto;
@@ -33,7 +34,8 @@ public class RestaurantController(IRestaurantService restaurantService) : Contro
     [Authorize(Roles = "Admin,Manager")]
     public ActionResult CreateRestaurant([FromBody] CreateRestaurantDto dto)
     {
-        var id = restaurantService.Create(dto);
+        var userId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
+        var id = restaurantService.Create(dto, userId);
 
         return Created($"/api/restaurants/{id}", null);
     }
@@ -41,7 +43,7 @@ public class RestaurantController(IRestaurantService restaurantService) : Contro
     [HttpDelete("{id:int}")]
     public ActionResult DeleteRestaurant([FromRoute] int id)
     {
-        restaurantService.Delete(id);
+        restaurantService.Delete(id, User);
 
         return NoContent();
     }
@@ -49,7 +51,7 @@ public class RestaurantController(IRestaurantService restaurantService) : Contro
     [HttpPut("{id:int}")]
     public ActionResult UpdateRestaurant([FromRoute] int id, [FromBody] UpdateRestaurantDto dto)
     {
-        restaurantService.Update(id, dto);
+        restaurantService.Update(id, dto, User);
 
         return Ok(id);
     }

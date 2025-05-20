@@ -20,6 +20,10 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
             context.Response.StatusCode = 400;
             await context.Response.WriteAsync(badRequestException.Message);
         }
+        catch (ForbidException forbidException)
+        {
+            context.Response.StatusCode = 403;
+        }
         catch(Exception e)
         {
             logger.LogError(e, e.Message);
