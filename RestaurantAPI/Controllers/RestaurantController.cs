@@ -1,10 +1,6 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using RestaurantAPI.Dto;
-using RestaurantAPI.Entities;
-using RestaurantAPI.Mapping;
 using RestaurantAPI.Services;
 
 namespace RestaurantAPI.Controllers;
@@ -26,7 +22,6 @@ public class RestaurantController(IRestaurantService restaurantService) : Contro
     public ActionResult<IEnumerable<RestaurantDto>> GetById([FromRoute] int id)
     {
         var restaurant = restaurantService.GetById(id);
-
         return Ok(restaurant);
     }
 
@@ -34,25 +29,21 @@ public class RestaurantController(IRestaurantService restaurantService) : Contro
     [Authorize(Roles = "Admin,Manager")]
     public ActionResult CreateRestaurant([FromBody] CreateRestaurantDto dto)
     {
-        var userId = int.Parse(User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value);
-        var id = restaurantService.Create(dto, userId);
-
+        var id = restaurantService.Create(dto);
         return Created($"/api/restaurants/{id}", null);
     }
 
     [HttpDelete("{id:int}")]
     public ActionResult DeleteRestaurant([FromRoute] int id)
     {
-        restaurantService.Delete(id, User);
-
+        restaurantService.Delete(id);
         return NoContent();
     }
 
     [HttpPut("{id:int}")]
     public ActionResult UpdateRestaurant([FromRoute] int id, [FromBody] UpdateRestaurantDto dto)
     {
-        restaurantService.Update(id, dto, User);
-
+        restaurantService.Update(id, dto);
         return Ok(id);
     }
 }
