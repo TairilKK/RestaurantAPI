@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 
 namespace RestaurantAPI.Controllers;
-
+[ApiExplorerSettings(IgnoreApi = true)]
 [Route("file")]
 [ApiController]
 [Authorize]

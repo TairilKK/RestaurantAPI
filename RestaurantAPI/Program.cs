@@ -112,16 +112,13 @@ app.UseMiddleware<RequestTimeMiddleware>();
 app.UseAuthentication();
 app.UseHttpsRedirection();
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Restaurant API");
-        options.RoutePrefix = string.Empty;
-    });
-    IdentityModelEventSource.ShowPII = true;
-}
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Restaurant API");
+    options.RoutePrefix = string.Empty;
+});
+IdentityModelEventSource.ShowPII = true;
 
 app.UseAuthorization();
 
