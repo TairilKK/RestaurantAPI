@@ -104,6 +104,7 @@ using (var scope = app.Services.CreateScope())
     seeder.Seed();
 }
 
+app.UseResponseCaching();
 app.UseStaticFiles();
 app.UseCors("FrontEndClient");
 app.UseMiddleware<ErrorHandlingMiddleware>();
