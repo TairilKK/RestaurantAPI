@@ -15,6 +15,9 @@
     &lt;TestId&gt;xUnit::C7F42956-97CC-46BE-8F69-FE5F085AE7F9::net8.0::RestaurantAPI.IntegrationTests.RestaurantControllerTests.Delete_ForNonExistingRestaurant_ReturnsNotFound&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::C7F42956-97CC-46BE-8F69-FE5F085AE7F9::net8.0::RestaurantAPI.IntegrationTests.RestaurantControllerTests.Delete_ForRestaurantOwner_ReturnsNoContent&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::C7F42956-97CC-46BE-8F69-FE5F085AE7F9::net8.0::RestaurantAPI.IntegrationTests.RestaurantControllerTests.Delete_ForNoneRestaurantOwner_ReturnsForbidden&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C7F42956-97CC-46BE-8F69-FE5F085AE7F9::net8.0::RestaurantAPI.IntegrationTests.AccountControllerTests.RegisterUser_ForValidModel_ReturnsOk&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C7F42956-97CC-46BE-8F69-FE5F085AE7F9::net8.0::RestaurantAPI.IntegrationTests.AccountControllerTests.RegisterUser_ForInvalidModel_ReturnsBadRequest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C7F42956-97CC-46BE-8F69-FE5F085AE7F9::net8.0::RestaurantAPI.IntegrationTests.AccountControllerTests.LoginUser_ForRegisteredUser_ReturnsOk&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
