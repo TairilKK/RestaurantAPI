@@ -12,5 +12,5 @@ public enum ResourceOperation
 
 public class ResourceOperationRequirement(ResourceOperation resourceOperation) : IAuthorizationRequirement
 {
-    public ResourceOperation ResourceOperation { get; set; }
+    public ResourceOperation ResourceOperation { get; } = resourceOperation;
 }
