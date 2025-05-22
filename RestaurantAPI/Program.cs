@@ -17,7 +17,7 @@ using RestaurantAPI.Models;
 using RestaurantAPI.Models.Validators;
 using RestaurantAPI.Services;
 
-var builder = WebApplication.CreateBuilder(args);
+// var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<RestaurantDbContext>(options =>
 {
     options.UseSqlServer(
