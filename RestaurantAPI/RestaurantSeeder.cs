@@ -8,11 +8,16 @@ public class RestaurantSeeder(RestaurantDbContext _dbContext)
     public void Seed()
     {
         if (!_dbContext.Database.CanConnect()) return;
-        var pendingMigrations = _dbContext.Database.GetPendingMigrations();
-        if (pendingMigrations.Any())
+
+        if (_dbContext.Database.IsRelational())
         {
-            _dbContext.Database.Migrate();
+            var pendingMigrations = _dbContext.Database.GetPendingMigrations();
+            if (pendingMigrations.Any())
+            {
+                _dbContext.Database.Migrate();
+            }
         }
+
         if (!_dbContext.Restaurants.Any())
         {
             var restaurants = GetRestaurants();

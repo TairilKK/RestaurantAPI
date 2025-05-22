@@ -1,11 +1,28 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
+using RestaurantAPI.Entities;
 
 namespace RestaurantAPI.IntegrationTests;
 
 public class RestaurantControllerTests(WebApplicationFactory<Program> factory) : IClassFixture<WebApplicationFactory<Program>>
 {
-    private readonly HttpClient _client = factory.CreateClient();
+    private readonly HttpClient _client = factory
+            .WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureServices(services =>
+                {
+                    var dbContextOptions = services.SingleOrDefault(service =>
+                        service.ServiceType == typeof(DbContextOptions<RestaurantDbContext>));
+                    services.Remove(dbContextOptions);
+
+                    services.AddDbContext<RestaurantDbContext>(options =>
+                    {
+                        options.UseInMemoryDatabase("RestaurantDb");
+                    });
+                });
+            })
+            .CreateClient();
 
     [Theory]
     [InlineData("pageSize=5&pageNumber=1")]
