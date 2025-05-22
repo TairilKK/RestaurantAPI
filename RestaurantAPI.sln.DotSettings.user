@@ -11,7 +11,6 @@
 &lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2632d6ee_002D940d_002D42cd_002Da5b9_002D4248e298abd1/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetAll_WithQueryParameters_ReturnOkResult #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::C7F42956-97CC-46BE-8F69-FE5F085AE7F9::net8.0::RestaurantAPI.IntegrationTests.RestaurantControllerTests.GetAll_WithValidQueryParameters_ReturnOkResult&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::C7F42956-97CC-46BE-8F69-FE5F085AE7F9::net8.0::RestaurantAPI.IntegrationTests.RestaurantControllerTests.GetAll_WithInvalidQueryParameters_ReturnOkResult&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::C7F42956-97CC-46BE-8F69-FE5F085AE7F9::net8.0::RestaurantAPI.IntegrationTests.RestaurantControllerTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
