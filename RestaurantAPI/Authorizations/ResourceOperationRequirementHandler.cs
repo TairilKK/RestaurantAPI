@@ -20,7 +20,6 @@ public class ResourceOperationRequirementHandler : AuthorizationHandler<Resource
         {
             context.Succeed(requirement);
         }
-
         return Task.CompletedTask;
     }
 }

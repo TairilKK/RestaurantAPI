@@ -102,4 +102,22 @@ GET {{RestaurantAPI_HostAddress}}/api/restaurant/?searchPhrase=k&pageSize=5&page
 Accept: application/json
 Authorization: Bearer {{token_admin1}}
 
+###
+GET {{RestaurantAPI_HostAddress}}/sample-file.txt
 
+
+###
+GET {{RestaurantAPI_HostAddress}}/file/?fileName=private-file.txt
+Authorization: Bearer {{token}}
+
+###
+POST {{RestaurantAPI_HostAddress}}/file/?fileName=private-file.txt
+Authorization: Bearer {{token}}
+Content-Type: multipart/form-data; boundary=MyBoundary
+
+--MyBoundary
+Content-Disposition: form-data; name="file"; filename="sample-file.txt"
+Content-Type: text/plain
+
+< C:\Users\jdobr\Downloads\upload-file1.txt
+--MyBoundary--

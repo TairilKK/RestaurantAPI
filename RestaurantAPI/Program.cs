@@ -91,7 +91,7 @@ builder.Services.AddCors(options =>
     {
         policyBuilder.AllowAnyMethod()
             .AllowAnyHeader()
-            .WithOrigins(builder.Configuration["AllowedOrigins"]);
+            .WithOrigins(builder.Configuration["AllowedOrigins"]!);
     });
 });
 
@@ -104,25 +104,28 @@ using (var scope = app.Services.CreateScope())
     seeder.Seed();
 }
 
+
+app.UseResponseCaching();
+app.UseStaticFiles();
+
 app.UseCors("FrontEndClient");
 app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseMiddleware<RequestTimeMiddleware>();
 app.UseAuthentication();
 app.UseHttpsRedirection();
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Restaurant API");
-        options.RoutePrefix = string.Empty;
-    });
-    IdentityModelEventSource.ShowPII = true;
-}
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Restaurant API");
+    options.RoutePrefix = string.Empty;
+});
+IdentityModelEventSource.ShowPII = true;
 
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
+public partial class Program{}
